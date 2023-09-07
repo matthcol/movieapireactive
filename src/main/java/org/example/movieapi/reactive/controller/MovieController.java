@@ -1,6 +1,7 @@
 package org.example.movieapi.reactive.controller;
 
 import lombok.Getter;
+import org.example.movieapi.reactive.data.Movie;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,12 +14,28 @@ import reactor.core.publisher.Mono;
 public class MovieController {
 
     @GetMapping
-    public Flux<String> topMovies(){
-        return Flux.empty();
+    public Flux<Movie> topMovies(){
+        //return Flux.empty();
+        return Flux.just(
+                Movie.builder()
+                        .id(1)
+                        .title("Barbie")
+                        .year((short) 2023)
+                        .build(),
+                Movie.builder()
+                        .id(2)
+                        .title("Oppenheimer")
+                        .year((short) 2023)
+                        .build()
+        );
     }
 
     @GetMapping("{id}")
-    public Mono<String> getById(@PathVariable("id") int id){
-        return Mono.just("Barbie");
+    public Mono<Movie> getById(@PathVariable("id") int id){
+        return Mono.just(Movie.builder()
+                .id(id)
+                .title("Barbie")
+                .year((short) 2023)
+                .build());
     }
 }
